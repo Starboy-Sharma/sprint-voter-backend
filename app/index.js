@@ -1,9 +1,10 @@
 const express = require('express')
-const app = express()
-
 const port = process.env.PORT || 8000
 
-app.get('/status', (req, res) => {
+const app = express()
+app.disable('x-powered-by');
+
+app.get('/status', (_req, res) => {
   res.status(200).end()
 })
 
