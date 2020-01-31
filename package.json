@@ -11,9 +11,13 @@
     "yarn": "^1.21.1"
   },
   "scripts": {
-    "start": "node app/index.js"
+    "start": "node app/index.js",
+    "dev": "nodemon app/index.js"
   },
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }
