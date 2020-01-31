@@ -1,5 +1,6 @@
 {
   "name": "nodejs-api-starter",
+  "description": "",
   "version": "0.0.0",
   "private": true,
   "author": "Jesse van der Pluijm",
@@ -8,6 +9,9 @@
   "engines": {
     "node": "^13.7.0",
     "yarn": "^1.21.1"
+  },
+  "scripts": {
+    "start": "node app/index.js"
   },
   "dependencies": {
     "express": "^4.17.1"
