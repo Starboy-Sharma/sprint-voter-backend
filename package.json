@@ -1,0 +1,9 @@
+{
+  "name": "nodejs-api-starter",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "author": "Jesse van der Pluijm",
+  "private": true,
+  "repository": "https://github.com/jessevdp/nodejs-api-starter.git",
+  "main": "index.js"
+}
