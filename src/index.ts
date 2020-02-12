@@ -1,11 +1,12 @@
-const express = require('express')
+import express from 'express'
+
 const port = process.env.PORT || 8000
 
 const app = express()
-app.disable('x-powered-by');
+app.disable("x-powered-by")
 
-app.get('/status', (_req, res) => {
-  res.status(200).end()
+app.get('/status', (req, res) => {
+  res.status(200).end();
 })
 
 app.listen(port, () => {
