@@ -1,14 +1,14 @@
-import express from 'express'
+import express from "express";
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 8000;
 
-const app = express()
-app.disable("x-powered-by")
+const app = express();
+app.disable("x-powered-by");
 
-app.get('/status', (req, res) => {
+app.get("/status", (req, res) => {
   res.status(200).end();
-})
+});
 
 app.listen(port, () => {
-  console.log(`App running on port ${port}`)
-})
+  console.log(`App running on port ${port}`);
+});
