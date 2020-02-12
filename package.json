@@ -7,12 +7,14 @@
   "license": "Apache-2.0",
   "repository": "https://github.com/jessevdp/nodejs-api-starter.git",
   "engines": {
-    "node": "^13.7.0",
+    "node": "^13.1.0",
     "yarn": "^1.21.1"
   },
   "scripts": {
-    "start": "node app/index.js",
-    "dev": "nodemon app/index.js",
+    "start": "node build/index.js",
+    "build": "yarn run clean && tsc",
+    "clean": "rm -rf ./build",
+    "dev": "nodemon",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
