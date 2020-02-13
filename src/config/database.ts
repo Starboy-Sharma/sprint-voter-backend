@@ -1,5 +1,13 @@
 export default {
   /**
+   * Get the full connection string
+   */
+  get connectionString(): string {
+    const auth = this.username ? `${this.username}:${this.password}@` : "";
+    return `mongodb://${auth}${this.hostname}:${this.port}/${this.name}`;
+  },
+
+  /**
    * Hostname of the MongoDB instance.
    *
    * @type {string}
