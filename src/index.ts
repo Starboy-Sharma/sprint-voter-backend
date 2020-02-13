@@ -1,5 +1,11 @@
 import express from "express";
+import mongoose from "mongoose";
 import config from "./config";
+
+mongoose.connect(config.database.connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}); // TODO: handle mongoose error
 
 const app = express();
 app.disable("x-powered-by");
