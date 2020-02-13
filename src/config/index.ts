@@ -17,6 +17,7 @@ dotenv.config(); // TODO: handle dotenv error
 */
 
 import appConfig from "./app";
+import databaseConfig from "./database";
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,6 @@ import appConfig from "./app";
 |--------------------------------------------------------------------------
 */
 export default {
-  app: appConfig
+  app: appConfig,
+  database: databaseConfig
 };
