@@ -14,7 +14,7 @@
     "start": "node build/index.js",
     "build": "yarn run clean && tsc",
     "clean": "rm -rf ./build",
-    "dev": "nodemon",
+    "dev": "NODE_ENV=development nodemon",
     "lint": "eslint src/**/*",
     "lint:fix": "yarn run lint --fix"
   },
