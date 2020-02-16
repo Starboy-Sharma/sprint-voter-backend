@@ -22,3 +22,6 @@ build/
 
 # Config files
 .env
+
+# Other
+.DS_Store
