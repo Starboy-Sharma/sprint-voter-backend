@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import config from "./config";
 import ItemModel, { Item } from "./models/item";
 
+import docsRouter from "./api/routes/docs";
+
 mongoose.connect(config.database.connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -10,7 +12,20 @@ mongoose.connect(config.database.connectionString, {
 
 const app = express();
 app.disable("x-powered-by");
+if (config.app.env === "development") {
+  app.use("/docs", docsRouter);
+}
 
+/**
+ * @swagger
+ *
+ * /status:
+ *  get:
+ *    description: Returns 200 if the server is live.
+ *    responses:
+ *      200:
+ *        description: OK
+ */
 app.get("/status", (req, res) => {
   res.status(200).end();
 });
