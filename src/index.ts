@@ -1,9 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import config from "./config";
-import ItemModel, { Item } from "./models/item";
 
 import docsRouter from "./api/routes/docs";
+import itemsRouter from "./api/routes/items";
 
 mongoose.connect(config.database.connectionString, {
   useNewUrlParser: true,
@@ -12,13 +12,15 @@ mongoose.connect(config.database.connectionString, {
 
 const app = express();
 app.disable("x-powered-by");
+
+app.use("/items", itemsRouter);
+
 if (config.app.env === "development") {
   app.use("/docs", docsRouter);
 }
 
 /**
  * @swagger
- *
  * /status:
  *  get:
  *    description: Returns 200 if the server is live.
@@ -28,11 +30,6 @@ if (config.app.env === "development") {
  */
 app.get("/status", (req, res) => {
   res.status(200).end();
-});
-
-app.get("/items", async (req, res) => {
-  const items: Item[] = await ItemModel.find();
-  res.status(200).json(items);
 });
 
 app.listen(config.app.port, () => {
