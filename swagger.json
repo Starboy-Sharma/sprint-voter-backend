@@ -1,0 +1,12 @@
+{
+  "definition": {
+    "info": {
+      "title": "Hello World",
+      "version": "1.0.0",
+      "description": "An example API"
+    }
+  },
+  "apis": [
+    "src/**/*.ts"
+  ]
+}
