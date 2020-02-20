@@ -1,7 +1,8 @@
 {
   "watch": [
     "src",
-    ".env"
+    ".env",
+    "swagger.json"
   ],
   "ext": "ts,json",
   "exec": "ts-node src/index.ts"
