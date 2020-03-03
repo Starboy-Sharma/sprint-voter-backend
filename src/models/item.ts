@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface Item extends Document {
-  name: number;
+  name: string;
 }
 
 const ItemSchema: Schema<Item> = new Schema(
