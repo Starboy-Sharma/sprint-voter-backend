@@ -13,12 +13,12 @@
   "scripts": {
     "start": "node build/index.js",
     "build": "yarn run clean && tsc",
-    "clean": "rm -rf ./build",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "dev": "NODE_ENV=development nodemon",
     "lint": "eslint src/**/*",
     "lint:fix": "yarn run lint --fix",
-    "test": "jest",
-    "test:watch": "jest --watchAll"
+    "clean": "rm -rf ./build"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
