@@ -1,4 +1,4 @@
 module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "node"
+  ...require("ts-jest/jest-preset"),
+  ...require("@shelf/jest-mongodb/jest-preset")
 };
