@@ -1,12 +1,8 @@
 import express from "express";
 import config from "./config";
 
-import mongooseLoader from "./loaders/mongoose";
-
 import docsRouter from "./api/routes/docs";
 import itemsRouter from "./api/routes/items";
-
-mongooseLoader();
 
 const app = express();
 app.disable("x-powered-by");
