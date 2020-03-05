@@ -1,4 +1,6 @@
 import { Router } from "express";
+import { OK } from "http-status-codes";
+
 import ItemModel, { Item } from "../../models/item";
 
 const router = Router();
@@ -15,7 +17,7 @@ const router = Router();
 router.get("/", async (req, res) => {
   const items: Item[] = await ItemModel.find();
   res
-    .status(200)
+    .status(OK)
     .json(items)
     .end();
 });

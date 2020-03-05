@@ -1,4 +1,6 @@
 import request from "supertest";
+import { OK } from "http-status-codes";
+
 import useTestDatabase from "./util/useTestDatabase";
 
 import app from "../src/app";
@@ -11,12 +13,12 @@ describe("GET /items", () => {
     const itemDoc = { name: "Test foo bar" };
     ItemModel.create(itemDoc);
     const response = await request(app).get("/items");
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(OK);
     expect(response.body).toContainEqual(expect.objectContaining(itemDoc));
   });
   it("returns an empty list when no items exist", async () => {
     const response = await request(app).get("/items");
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(OK);
     expect(response.body).toEqual(expect.any(Array));
     expect(response.body).toHaveLength(0);
   });
