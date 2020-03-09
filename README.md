@@ -14,13 +14,13 @@ This project uses [Jest](https://jestjs.io) as its test runner.
 - `yarn test:watch` to run all tests in watch mode. (Very useful during development.)
 
 
-### Filenaming
+### File naming
 
 - **Unit tests**  
-Unit test files should have the same name as the file of the code that they are testing, suffixed by `.spec`. Unit test files are placed next to the code that they are testing, either in a `.spec.ts` file right next to the code, or in a `__tests__` folder. This ensures relative imports appear shorter. Colocation also helps find tests more quickly.
+Unit test files should have the same name as the file of the code that they are testing, suffixed by `.spec`. Unit test files are placed next to the code that they are testing, either in a `.spec.ts` file right next to the code, or in a `__tests__` folder. This ensures relative imports appear shorter. Colocation also helps find tests more quickly. <br> For example: `src/models/item.spec.ts`.
 
 - **Feature tests**  
-Feature test files should have a descriptive name based on the feature that they are testing, suffixed by `.test`. Feature tests files are placed in the `tests/` folder. For example: `login.test.ts`.
+Feature test files should have a descriptive name based on the feature that they are testing, suffixed by `.test`. Feature tests files are placed in the `tests/` folder. <br> For example: `tests/login.test.ts`.
 
 
 ### Feature tests
