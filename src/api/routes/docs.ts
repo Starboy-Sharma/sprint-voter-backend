@@ -1,7 +1,7 @@
 import { Router } from "express";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUI from "swagger-ui-express";
-import swaggerOptions from "../../../swagger.json";
+import swaggerOptions from "../../config/swagger.json";
 
 const router = Router();
 
