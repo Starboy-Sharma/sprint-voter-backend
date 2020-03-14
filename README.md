@@ -1,5 +1,35 @@
 # NodeJS API starter
 
+
+# Development Manual
+
+## Configuration
+
+Configuration for this project is done through typescript files stored under `src/config`. This ensures all code referencing configuration items is still type safe. Configuration is broken up into multiple smaller config files each containing only related configuration items. For example the `config/database.ts` file contains all configuration for the MongoDB connection. 
+
+While some configuration items can be hard coded into these typescript files, most config items depend on the environment in which the app is running. Therefore, these config items should be read from environment variables. Note that some env related config items can have sensible defaults. Consider the following example:
+
+```ts
+const databaseConfig {
+  hostname: process.env.DB_HOST || "localhost",
+}
+```
+
+To make declaring environment variables a little bit easier during development, this project supports declaring environment variables through an `.env` file. The `.env` file should be located in the root of the repository.
+
+### Adding a new config file
+
+While the configuration is split up into multiple files, we want the config to appear as a single object in the rest of the code. For this reason the individual config files are re-exported from the `config/index.ts` file. **When adding a new config file, remember to re-export it as well**.
+
+```ts
+import databaseConfig from "./database";
+
+// re-export
+export default {
+  database: databaseConfig
+}
+```
+
 ## Testing
 
 This project uses two different types of tests: **unit tests** that test a specific component in isolation, and **feature tests** that test a complete feature from the API call to the database (also called integration tests or end to end tests). As a general rule, start by writing a feature test, and jump down to the unit level if a particular unit is complicated enough.
