@@ -1,5 +1,10 @@
 # NodeJS API starter
 
+### Contents
+
+- [Development manual](#development-manual)
+  - [Configuration](#configuration)
+  - [Testing](#testing)
 
 # Development Manual
 
