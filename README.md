@@ -6,6 +6,7 @@
 - [Configuration](#configuration)
 - [Development manual](#development-manual)
   - [Development setup](#development-setup)
+  - [Project structure](#project-structure)
   - [Configuration](#configuration-1)
   - [Testing](#testing)
 
@@ -53,6 +54,83 @@
 * `yarn run test:watch` runs the test suite in interactive mode, rerunning the tests when the code changes.
 * `yarn run lint:fix` lints the code, automatically fixing issues where possible.
 * `yarn run build` builds the project.
+
+## Project structure
+
+The general structure and architecture of this project are based on the article titled ["Bulletproof node.js project architecture"](https://softwareontheroad.com/ideal-nodejs-project-structure/?utm_source=github&utm_medium=readme#service). In short, the architecture consists of 3 main layers: routing, services, and data access. Additionally, the [publisher/subscriber pattern](https://medium.com/@pongpiraupra/decoupling-modules-using-publisher-subscriber-in-node-js-7dd22206ad13) is used to decouple side effects from service layer. The following diagram summarizes these components:
+
+![architecture](https://user-images.githubusercontent.com/15139826/76702892-b63cfb00-66cd-11ea-9fee-b8fcd3d563c9.png)
+
+In the case of this project:
+
+* The routing layer refers to the express routing logic. See [route controllers](#route-controllers).
+* The service layer consists of service classes. See [services](#services).
+* The data access layer refers to Mongoose models.
+* The event listeners layer refers to the listener classes. See [listeners](#listeners).
+
+Aside from these major architectural components the project contains several other types of components.
+
+* Config. Configuration of the application is done through several typescript files. See [configuration](#configuration-1).
+* Loaders. The startup sequence of the application is split into several smaller modules.
+* Tests. See [testing](#testing).
+
+Consider the folder structure of the project, it separates all of these components.
+
+```
+.
+├── src
+│   ├── index.ts
+│   ├── app.ts
+│   ├── api/ (routing)
+│   │   ├── middleware/
+│   │   └── routes/
+│   ├── config/
+│   ├── listeners/
+│   ├── loaders/
+│   ├── models/
+│   └── services/
+└── tests
+    ├── *.test.ts
+    └── util/
+```
+
+### Route controllers
+
+The first layer, the routing layer, is responsible for everything related to HTTP requests and responses. A route controller knows about the `request` and `response` object, request parameters, the request body, HTTP status codes, etc. Important to note is that route controllers do NOT contain business logic, nor do they have any notion of a database etc. This is to ensure a good separation of concerns. Instead, route controllers call to a [service](#services) class to handle business logic.
+
+In express it is possible to separate routing logic into multiple modular [routers](http://expressjs.com/en/5x/api.html#router). This concept is used to split the applications routing logic up into smaller modules. Consider the following code snippet, which contains a sample route controller using `express.Router`. This router can be imported and attached to the main express app.
+
+```ts
+import { Router } from "express";
+const router = Router();
+
+// Attach route handlers and other middleware
+router.get("/subroute", async (req, res) => {});
+
+export default router;
+```
+
+### Services
+
+The second layer, the service layer, is responsible for handling business logic and interacting with the data access layer. A service class knows about Mongoose models. Additionally, it may fire/emit events that can be handled by event listeners. Important to note is that a service class should not know anything about HTTP, as this is the job of the [routing layer](#route-controllers).
+
+The service layer consists of service classes, each responsible for an isolated piece of business logic. The following code snippet contains a very basic service class for managing `Example` models.
+
+```ts
+import ExampleModel, { Example } from "../models/example";
+
+class ExampleService {
+  async findAll(): Promise<Example[]> {
+    return ExampleModel.find();
+  }
+}
+
+export default new ExampleService();
+```
+
+### Listeners
+
+> TODO
 
 ## Configuration
 
