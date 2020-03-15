@@ -1,20 +1,26 @@
 {
   "definition": {
+    "openapi": "3.0.3",
     "info": {
       "title": "Hello World",
       "version": "1.0.0",
       "description": "An example API"
-    }
+    },
+    "x-tagGroups": [
+      {
+        "name": "General",
+        "tags": [
+          "items"
+        ]
+      },
+      {
+        "name": "Models",
+        "tags": [
+          "item_model"
+        ]
+      }
+    ]
   },
-  "x-tagGroups": [
-    {
-      "name": "User Management",
-      "tags": [
-        "Items",
-        "Status"
-      ]
-    }
-  ],
   "apis": [
     "src/**/*.ts"
   ]

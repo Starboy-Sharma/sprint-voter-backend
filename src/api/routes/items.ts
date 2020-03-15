@@ -7,23 +7,30 @@ import itemService from "../../services/item";
 const router = Router();
 
 /**
- * @openapi
+ * @swagger
  * tags:
- *  - name: Items
- *    description: Item routes
+ * - name: items
+ *   x-displayName: Items
+ *   description: Everything about Items
  */
 
 /**
- * @openapi
+ * @swagger
  * /items:
  *  get:
  *    summary: Get all items
- *    description: Returns all items
+ *    description: Returns all items.
  *    tags:
- *    - Items
+ *    - items
  *    responses:
  *      200:
  *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Item'
  */
 router.get("/", async (req, res) => {
   const items: Item[] = await itemService.findAll();

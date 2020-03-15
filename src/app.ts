@@ -13,5 +13,4 @@ if (config.app.env === "development") {
   app.use("/docs", docsRouter);
 }
 
-/**
 export default app;
