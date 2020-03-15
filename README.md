@@ -99,6 +99,27 @@ Unit test files should have the same name as the file of the code that they are 
 - **Feature tests**  
 Feature test files should have a descriptive name based on the feature that they are testing, suffixed by `.test`. Feature tests files are placed in the `tests/` folder. <br> For example: `tests/login.test.ts`.
 
+### Mocking Mongoose in unit tests
+
+This project uses [`mockingoose`](https://www.npmjs.com/package/mockingoose) to mock Mongoose models in unit tests. Consider the example below. The code snippet contains code to test an example `ItemSerivce` with a `findAll()` method. As you can see we can simply instruct `mockingoose` to mock `ItemModel` and make it return our set of sample data from the `ItemModel.find()` method. Note that we reset our mocks before each test.
+
+```ts
+import mockingoose from "mockingoose";
+
+import ItemModel from "../models/item";
+import itemService from "./item";
+
+beforeEach(() => {
+  mockingoose.resetAll();
+});
+
+test("example", async () => {
+  const data = [{ name: "First item" }];
+  mockingoose(ItemModel).toReturn(data, "find");
+  const result = await itemService.findAll();
+  expect(result).toMatchObject(data);
+})
+```
 
 ### Feature tests
 
