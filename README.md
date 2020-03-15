@@ -11,11 +11,18 @@
 
 ## Running the project
 
-1. Clone the repository
+1. Make sure you have the required software installed. (See [required software](#required-software).)
+1. Clone the repository.
 1. Install dependencies (run `yarn`).
 1. Configure the project through environment variables (also possible through an `.env` file). (See [configuration](#configuration).)
 1. Build the project (run `yarn run build`).
 1. Start the server (run `yarn run start`).
+
+#### Required software
+
+* [NodeJS](https://nodejs.org/en/) version `^13.1.0`
+* [Yarn](https://yarnpkg.com) version `^1.21.1`
+* [MongoDB](https://www.mongodb.com) (tested using version `v4.2.2`)
 
 ## Configuration
 
@@ -32,10 +39,7 @@
 
 ## Development setup
 
-1. Make sure you have the required software installed.
-    * [NodeJS](https://nodejs.org/en/) version `^13.1.0`
-    * [Yarn](https://yarnpkg.com) version `^1.21.1`
-    * [MongoDB](https://www.mongodb.com) version `v4.2.2`
+1. Make sure you have the required software installed. (See [required software](#required-software).)
 1. Clone the repository.
 1. Install dependencies (run `yarn`).
 1. Configure the project.
