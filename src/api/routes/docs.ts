@@ -1,13 +1,16 @@
 import { Router } from "express";
-import swaggerJSDoc from "swagger-jsdoc";
-import swaggerUI from "swagger-ui-express";
-import swaggerOptions from "../../config/swagger.json";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
+import openApiJSDoc from "openapi-jsdoc";
+import redoc from "redoc-express";
+
+import swaggerOptions from "../../config/openapi.json";
 
 const router = Router();
 
-const swaggerSpec = swaggerJSDoc(swaggerOptions);
-
-router.use(swaggerUI.serve);
-router.get("/", swaggerUI.setup(swaggerSpec));
+const spec = openApiJSDoc(swaggerOptions);
+router.get("/spec.json", (_, res) => res.json(spec));
+router.get("/", redoc({ title: spec.info.title, specUrl: "docs/spec.json" }));
 
 export default router;
