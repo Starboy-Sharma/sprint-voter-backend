@@ -2,11 +2,53 @@
 
 ### Contents
 
+- [Running the project](#running-the-project)
+- [Configuration](#configuration)
 - [Development manual](#development-manual)
-  - [Configuration](#configuration)
+  - [Development setup](#development-setup)
+  - [Configuration](#configuration-1)
   - [Testing](#testing)
 
+## Running the project
+
+1. Clone the repository
+1. Install dependencies (run `yarn`).
+1. Configure the project through environment variables (also possible through an `.env` file). (See [configuration](#configuration).)
+1. Build the project (run `yarn run build`).
+1. Start the server (run `yarn run start`).
+
+## Configuration
+
+| Variable | Type | Default | Explanation |
+| -------- | ---- | ------- | ----------- |
+| `PORT` | `number` | `8000` | Determines the port on which the application will listen. |
+| `DB_HOST` | `string` | `"localhost"` | Hostname of the MongoDB instance. |
+| `DB_PORT` | `string` | `"27017"` | Port of the MongoDB instance. |
+| `DB_NAME` | `string?` | — | Optional. Name of the database that this app can use. Will use the [default database](https://kb.objectrocket.com/mongo-db/how-to-change-the-mongo-default-database-from-test-204) of the MongoDB instance if omitted. |
+| `DB_USERNAME` | `string?` | — | Optional. The username of your MongoDB user. May not be required during development if your local MongoDB instance does not have access control enabled. |
+| `DB_PASSWORD` | `string?` | — | Optional. The password for your MongoDB user. May not be required during development if your local MongoDB instance does not have access control enabled. |
+
 # Development Manual
+
+## Development setup
+
+1. Make sure you have the required software installed.
+    * [NodeJS](https://nodejs.org/en/) version `^13.1.0`
+    * [Yarn](https://yarnpkg.com) version `^1.21.1`
+    * [MongoDB](https://www.mongodb.com) version `v4.2.2`
+1. Clone the repository.
+1. Install dependencies (run `yarn`).
+1. Configure the project.
+    1. Create a `.env` file by copying the `example.env` file. (Run `cp example.env .env`.)
+    1. Configure your settings. (See [configuration](#configuration).)
+
+
+### Useful commands for development
+
+* `yarn run dev` runs the project using [nodemon](https://nodemon.io) so it is restarted when the code changes.
+* `yarn run test:watch` runs the test suite in interactive mode, rerunning the tests when the code changes.
+* `yarn run lint:fix` lints the code, automatically fixing issues where possible.
+* `yarn run build` builds the project.
 
 ## Configuration
 
