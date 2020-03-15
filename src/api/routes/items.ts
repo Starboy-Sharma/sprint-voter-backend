@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { OK } from "http-status-codes";
 
-import ItemModel, { Item } from "../../models/item";
+import { Item } from "../../models/item";
+import itemService from "../../services/item";
 
 const router = Router();
 
@@ -15,7 +16,7 @@ const router = Router();
  *        description: OK
  */
 router.get("/", async (req, res) => {
-  const items: Item[] = await ItemModel.find();
+  const items: Item[] = await itemService.findAll();
   res
     .status(OK)
     .json(items)
