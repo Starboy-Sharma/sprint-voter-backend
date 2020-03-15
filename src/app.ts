@@ -14,16 +14,4 @@ if (config.app.env === "development") {
 }
 
 /**
- * @swagger
- * /status:
- *  get:
- *    description: Returns 200 if the server is live.
- *    responses:
- *      200:
- *        description: OK
- */
-app.get("/status", (req, res) => {
-  res.status(200).end();
-});
-
 export default app;
