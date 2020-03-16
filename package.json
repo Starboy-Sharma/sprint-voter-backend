@@ -23,12 +23,16 @@
     "clean": "rm -rf ./build"
   },
   "dependencies": {
+    "@types/morgan": "^1.9.0",
     "@types/swagger-jsdoc": "^3.0.2",
+    "@types/winston": "^2.4.4",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http-status-codes": "^1.4.0",
     "mongoose": "^5.8.13",
-    "swagger-jsdoc": "^3.5.0"
+    "morgan": "^1.9.1",
+    "swagger-jsdoc": "^3.5.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@shelf/jest-mongodb": "^1.1.3",
