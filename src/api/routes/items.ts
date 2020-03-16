@@ -11,15 +11,15 @@ const router = Router();
  * tags:
  * - name: items
  *   x-displayName: Items
- *   description: Everything about Items
+ *   description: 'Everything about Items.'
  */
 
 /**
  * @swagger
- * /items:
+ * '/items':
  *  get:
  *    summary: Get all items
- *    description: Returns all items.
+ *    description: 'Returns all items.'
  *    tags:
  *    - items
  *    responses:
