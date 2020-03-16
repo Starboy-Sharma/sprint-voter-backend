@@ -23,6 +23,7 @@ export default async function(): Promise<void> {
       }
     }
   } catch (error) {
+    // TODO improve logging?
     console.error("Problem loading listeners:");
     console.error(error.toString());
     process.exit(1);
