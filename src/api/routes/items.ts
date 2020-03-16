@@ -40,9 +40,4 @@ router.get("/", async (req, res) => {
     .end();
 });
 
-router.get("/:id", (req, res) => {
-  const id = req.params.id;
-  res.send(id);
-});
-
 export default router;
