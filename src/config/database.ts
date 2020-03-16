@@ -5,6 +5,11 @@ type DatabaseConfig = {
   connectionString: string;
 
   /**
+   * Get short connection string (without credentials and protocol)
+   */
+  shortConnectionString: string;
+
+  /**
    * Hostname of the MongoDB instance.
    *
    * @default "localhost"
@@ -39,7 +44,10 @@ type DatabaseConfig = {
 const databaseConfig: Readonly<DatabaseConfig> = {
   get connectionString(): string {
     const auth = this.username ? `${this.username}:${this.password}@` : "";
-    return `mongodb://${auth}${this.hostname}:${this.port}/${this.name}`;
+    return `mongodb://${auth}${this.shortConnectionString}`;
+  },
+  get shortConnectionString(): string {
+    return `${this.hostname}:${this.port}/${this.name}`;
   },
 
   hostname: process.env.DB_HOST || "localhost",
