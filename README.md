@@ -64,7 +64,7 @@ The general structure and architecture of this project are based on the article 
 
 In the case of this project:
 
-* The routing layer refers to the express routing logic. See [route controllers](#route-controllers).
+* The routing layer refers to the express routing logic. See [routing](#routing).
 * The service layer consists of service classes. See [services](#services).
 * The data access layer refers to Mongoose models.
 * The event publisher/subscriber layer refers to the events and listeners. See [events and listeners](#events-and-listeners).
@@ -96,7 +96,7 @@ Consider the folder structure of the project, it separates all of these componen
     └── util/
 ```
 
-### Route controllers
+### Routing
 
 The first layer, the routing layer, is responsible for everything related to HTTP requests and responses. A route controller knows about the `request` and `response` object, request parameters, the request body, HTTP status codes, etc. Important to note is that route controllers do NOT contain business logic, nor do they have any notion of a database etc. This is to ensure a good separation of concerns. Instead, route controllers call to a [service](#services) class to handle business logic.
 
@@ -112,9 +112,16 @@ router.get("/subroute", async (req, res) => {});
 export default router;
 ```
 
+This router should be imported in `app.ts` and attached to the main express app. Consider the following example, in which the `exampleRouter` is attached to the main app at the `/examples` route.
+
+```ts
+import exampleRouter from "./api/routes/example";
+app.use("/examples", exampleRouter);
+```
+
 ### Services
 
-The second layer, the service layer, is responsible for handling business logic and interacting with the data access layer. A service class knows about Mongoose models. Additionally, it may fire/emit events that can be handled by event listeners. Important to note is that a service class should not know anything about HTTP, as this is the job of the [routing layer](#route-controllers).
+The second layer, the service layer, is responsible for handling business logic and interacting with the data access layer. A service class knows about Mongoose models. Additionally, it may fire/emit events that can be handled by event listeners. Important to note is that a service class should not know anything about HTTP, as this is the job of the [routing layer](#routing).
 
 The service layer consists of service classes, each responsible for an isolated piece of business logic. The following code snippet contains a very basic service class for managing `Example` models.
 
