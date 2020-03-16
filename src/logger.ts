@@ -21,4 +21,11 @@ const logger = winston.createLogger({
   ]
 });
 
+// Morgan logger can write to this stream
+export const stream = {
+  write(message: string): void {
+    logger.info(message);
+  }
+};
+
 export default logger;
