@@ -9,6 +9,7 @@
   - [Project structure](#project-structure)
   - [Configuration](#configuration-1)
   - [Testing](#testing)
+  - [Writing documentation](#writing-documentation)
 
 ## Running the project
 
@@ -229,3 +230,65 @@ useTestDatabase();
 ```
 
 This utility connects mongoose to the in-memory MongoDB before all tests, cleans up the connection after all tests, resets all collections between tests (to ensure each test starts with a clean database state).
+
+## Writing documentation
+
+The public API of project is documented using the [OpenAPI 3.0](https://swagger.io/docs/specification/about/) specification. While the documentation usually lives in a separate JSON or Yaml file, this project leverages a tool called [`swagger-jsdoc`](https://www.npmjs.com/package/swagger-jsdoc) which allows us to extract OpenAPI documentation from JSDoc comments. This enables us to write the documentation right next to the code it describes by using the `@swagger` annotation.
+
+Writing OpenAPI documentation can take a bit of practice. It is recommended that you leverage a tool like the [Swagger Editor](https://editor.swagger.io) to make this process easier. This editor understands the OpenAPI specification and helps with autocompletion. It also helps verify that your documentation complies with the specification.
+
+This project uses [ReDoc](https://github.com/Redocly/redoc) as a UI for the documentation. When running the project in development mode (`NODE_ENV=development`), the documentation is available at `/docs`. The generated specification is also available in JSON format at `/docs/spec.json`. When running `yarn run dev` the documentation will be regenerated as files change. This is useful for previewing the docs while writing them.
+
+As mentioned, the documentation should be placed right next to the code it describes. This means that the documentation is split across the repository.
+
+* The top level OpenAPI fields (like `info`, among other settings) is placed in `config/openapi.json`.
+* Documentation for actual routes (called Paths in OpenAPI) are placed next to the route handlers in `api/routes/*`.
+* (Reusable) documentation for schemas, parameters, responses etc. are placed next to the code. For example the schema definition for an `Example` model is placed in `models/example.ts`.
+
+Note that it is possible to link between pieces of documentation. For example the docs for some API route might need to reference the schema of a model. Consider the following example, where the `Item` schema is defined next to the model, and used in the documentation for the `/items` route. See the `$ref` property.
+
+```ts
+// ========================
+// In models/item.ts
+// ========================
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Item:
+ *       title: Item
+ *       tags:
+ *       - item_model
+ *       required:
+ *       - name
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Name of the item
+ *           example: "Example item"
+ */
+
+// ========================
+// In api/routes/items.ts
+// ========================
+
+/**
+ * @swagger
+ * '/items':
+ *  get:
+ *    summary: Get all items
+ *    description: Returns all items.
+ *    tags:
+ *    - items
+ *    responses:
+ *      200:
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                $ref: '#/components/schemas/Item'
+ */
+```
