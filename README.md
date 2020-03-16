@@ -67,7 +67,7 @@ In the case of this project:
 * The routing layer refers to the express routing logic. See [route controllers](#route-controllers).
 * The service layer consists of service classes. See [services](#services).
 * The data access layer refers to Mongoose models.
-* The event listeners layer refers to the listener classes. See [listeners](#listeners).
+* The event publisher/subscriber layer refers to the events and listeners. See [events and listeners](#events-and-listeners).
 
 Aside from these major architectural components the project contains several other types of components.
 
@@ -86,6 +86,7 @@ Consider the folder structure of the project, it separates all of these componen
 │   │   ├── middleware/
 │   │   └── routes/
 │   ├── config/
+│   ├── events/
 │   ├── listeners/
 │   ├── loaders/
 │   ├── models/
@@ -129,9 +130,54 @@ class ExampleService {
 export default new ExampleService();
 ```
 
-### Listeners
+### Events and listeners
 
-> TODO
+The [publisher/subscriber pattern](https://medium.com/@pongpiraupra/decoupling-modules-using-publisher-subscriber-in-node-js-7dd22206ad13) is used to decouple the business logic contained in a service from any side effects it causes. A great example use case is starting an email sequence after a user signs up. The service layer should take care of actually creating the new user record. If this service also calls some 3rd party email service the code can become quite messy. Instead, we `emit` an event (call it `UserSignup`). A corresponding listener can `subscribe` to this event and act accordingly.
+
+#### Events
+
+* Events are classes that extend the abstract `Event` class.
+* An event class can take parameters, which is useful for passing data to the listeners.
+* Events should be placed in a file in `src/events/`. Because event classes are usually quite small we can place related events in the same file.
+
+```ts
+import Event from "./base-event";
+
+export class ExampleEvent extends Event {
+  public someParam: string;
+
+  constructor(param: string) {
+    super();
+    this.someParam = param;
+  }
+}
+```
+
+#### Listeners
+
+* Call to the `subscribe` function of `src/events` to register themselves.
+* The callback receives an instance of the event when it occurs.
+* Listener files are placed in the `src/listeners/` directory. They are automatically imported from there.
+
+```ts
+import { subscribe } from "../events";
+import { ExampleEvent } from "../events/example";
+
+subscribe(ExampleEvent.eventName, event => {
+  // access event.someParam etc.
+})
+```
+
+#### Emitting an event
+
+To emit an event, import the `emit` function from `src/events/` and call it by passing an instance of an event to it. Consider the following example.
+
+```ts
+import { emit } from "../events";
+import { ExampleEvent } from "../events/example";
+
+emit(new ExampleEvent("parameter"));
+```
 
 ## Configuration
 
