@@ -48,6 +48,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^25.1.0",
     "mockingoose": "^2.13.2",
+    "mongo-seeding": "^3.4.0",
     "nodemon": "^2.0.2",
     "prettier": "^1.19.1",
     "redoc-express": "^1.0.0",
