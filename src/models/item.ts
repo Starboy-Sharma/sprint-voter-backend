@@ -25,10 +25,11 @@ import mongoose, { Schema, Document } from "mongoose";
  *           description: Name of the item
  *           example: "Example item"
  */
-
-export interface Item extends Document {
+export interface ItemData {
   name: string;
 }
+
+export interface Item extends ItemData, Document {}
 
 const ItemSchema: Schema<Item> = new Schema(
   {

@@ -1,7 +1,11 @@
 import * as path from "path";
+import faker from "faker";
 import { Seeder } from "mongo-seeding";
 
 import config from "../src/config";
+
+// Seed the faker before running seeders to get persistent results.
+faker.seed(123);
 
 const pathToData = path.resolve("./seeds/data");
 
