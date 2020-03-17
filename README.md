@@ -11,6 +11,7 @@
     - [Services](#services)
     - [Events and listeners](#events-and-listeners)
   - [Configuration](#configuration-1)
+  - [Seeding](#seeding)
   - [Testing](#testing)
   - [Writing documentation](#writing-documentation)
 
@@ -50,6 +51,7 @@
 1. Configure the project.
     1. Create a `.env` file by copying the `example.env` file. (Run `cp example.env .env`.)
     1. Configure your settings. (See [configuration](#configuration).)
+1. Seed your data base (run `yarn run seed`).
 
 
 ### Useful commands for development
@@ -58,6 +60,7 @@
 * `yarn run test:watch` runs the test suite in interactive mode, rerunning the tests when the code changes.
 * `yarn run lint:fix` lints the code, automatically fixing issues where possible.
 * `yarn run build` builds the project.
+* `yarn run seed` fills the database with seed data. (Note, this drops the database first.)
 
 ## Project structure
 
@@ -77,12 +80,13 @@ Aside from these major architectural components the project contains several oth
 * Config. Configuration of the application is done through several typescript files. See [configuration](#configuration-1).
 * Loaders. The startup sequence of the application is split into several smaller modules.
 * Tests. See [testing](#testing).
+* Seeders. See [seeding](#seeding).
 
 Consider the folder structure of the project, it separates all of these components.
 
 ```
 .
-├── src
+├── src/
 │   ├── index.ts
 │   ├── app.ts
 │   ├── api/ (routing)
@@ -94,7 +98,10 @@ Consider the folder structure of the project, it separates all of these componen
 │   ├── loaders/
 │   ├── models/
 │   └── services/
-└── tests
+├── seeds/
+│   ├── index.ts
+│   └── data/
+└── tests/
     ├── *.test.ts
     └── util/
 ```
@@ -214,6 +221,36 @@ import databaseConfig from "./database";
 export default {
   database: databaseConfig
 }
+```
+
+## Seeding
+
+This project uses [mongo-seeding](https://github.com/pkosiec/mongo-seeding#readme) to facilitate the database seeding process. `seeds/index.ts` contains a script that will seed the database with example data. This script is called by running `yarn run seed`.
+
+The actual data that will be imported into the database is defined in `seeds/data/`, read the [import data definition guide](https://github.com/pkosiec/mongo-seeding/blob/master/docs/import-data-definition.md) of mongo-seeding for more info on how the files within `seeds/data/` should be organized. Note that this project uses Typescript files for the seeder files, because it allows us to generate fake data.
+
+[Faker](https://www.npmjs.com/package/faker) is used to generate random data within the seeders.
+
+Consider the following example seeder. It creates 10 data objects for `Example` models, each with a random word for the `name` property.
+
+```ts
+import faker from "faker";
+import { ItemData } from "../../../src/models/example";
+
+function createExample(): ExampleData {
+  return {
+    name: faker.random.word()
+  };
+}
+
+const data = [];
+const amount = 10;
+
+for (let i = 0; i < amount; i++) {
+  data.push(createExample());
+}
+
+export = data;
 ```
 
 ## Testing
