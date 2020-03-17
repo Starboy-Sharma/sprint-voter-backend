@@ -12,13 +12,30 @@ function readdir(path: fs.PathLike): Promise<string[] | Buffer[]> {
   });
 }
 
+function exists(path: fs.PathLike): Promise<boolean> {
+  return new Promise(resolve => {
+    fs.exists(path, exists => {
+      resolve(exists);
+    });
+  });
+}
+
 // Dynamically import all files under the "/listeners" directory.
 // This way we don't have to import each file individually.
 export default async function(): Promise<void> {
+  logger.debug("Loading event listeners...");
+
   const pathToListeners = path.join(__dirname, "../listeners");
+  const listenersDirExists = await exists(pathToListeners);
+
+  if (!listenersDirExists) {
+    logger.warn(
+      "Could not load event listeners: directory does not exist. Continuing without event listeners."
+    );
+    return;
+  }
 
   try {
-    logger.debug("Loading event listeners...");
     const files = await readdir(pathToListeners);
     for (const file of files) {
       if (file.constructor.name === "String") {
