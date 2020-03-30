@@ -11,6 +11,7 @@ const app = express();
 app.disable("x-powered-by");
 
 app.use(morgan(config.app.debug ? "dev" : "combined", { stream }));
+app.use(express.json());
 
 app.use("/items", itemsRouter);
 
