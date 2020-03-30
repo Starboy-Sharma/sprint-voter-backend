@@ -1,0 +1,47 @@
+components:
+  responses:
+    ValidationError:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "ValidationError"
+              message:
+                type: string
+                example: "Validation Failed"
+              statusCode:
+                type: number
+                example: 400
+              error:
+                type: string
+                example: "Bad Request"
+              details:
+                type: object
+                properties:
+                  body:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: "foo is required"
+                      path:
+                        type: array
+                        items:
+                          type: string
+                          example: "foo"
+                      type:
+                        type: string
+                        example: "string.required"
+                      context:
+                        type: object
+                        properties:
+                          label:
+                            type: string
+                            example: "foo"
+                          key:
+                            type: string
+                            example: "foo"

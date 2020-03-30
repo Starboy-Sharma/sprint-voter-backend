@@ -22,6 +22,7 @@
     ]
   },
   "apis": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.openapi.{yaml,yml}"
   ]
 }
