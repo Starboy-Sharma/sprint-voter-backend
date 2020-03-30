@@ -8,8 +8,10 @@ const { error } = dotenv.config();
 if (error) {
   // We can't use our logger here, because it depends on the config, which
   // isn't available until the environment variables are loaded.
-  console.error("Failed to load environment variables:\n", error);
-  process.exit(1);
+  console.error(
+    "Failed to load environment variables from .env:\n",
+    error.message
+  );
 }
 
 /*
