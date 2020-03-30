@@ -23,5 +23,8 @@ build/
 # Config files
 .env
 
+# Test results
+coverage/
+
 # Other
 .DS_Store
