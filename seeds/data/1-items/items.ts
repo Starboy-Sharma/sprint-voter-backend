@@ -11,7 +11,12 @@ const data = [];
 const amount = 10;
 
 for (let i = 0; i < amount; i++) {
-  data.push(createItem());
+  const item = {
+    ...createItem(),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
+  data.push(item);
 }
 
 export = data;
