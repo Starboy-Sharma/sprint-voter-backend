@@ -18,12 +18,24 @@ import mongoose, { Schema, Document } from "mongoose";
  *       tags:
  *       - item_model
  *       required:
+ *       - _id
  *       - name
  *       properties:
+ *         _id:
+ *           type: string
+ *           example: "5e7092dc4afc45f107df07fa"
  *         name:
  *           type: string
  *           description: Name of the item
  *           example: "Example item"
+ *         createdAt:
+ *           type: string
+ *           description: timestamp
+ *           example: "2020-03-30T06:57:51.231Z"
+ *         updatedAt:
+ *           type: string
+ *           description: timestamp
+ *           example: "2020-03-30T06:57:51.231Z"
  */
 export interface ItemData {
   name: string;
