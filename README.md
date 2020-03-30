@@ -231,7 +231,7 @@ The actual data that will be imported into the database is defined in `seeds/dat
 
 [Faker](https://www.npmjs.com/package/faker) is used to generate random data within the seeders.
 
-Consider the following example seeder. It creates 10 data objects for `Example` models, each with a random word for the `name` property.
+Consider the following example seeder. It creates 10 data objects for `Example` models, each with a random word for the `name` property. Additionally, it adds the `createdAt` and `updatedAt` timestamps to the created objects.
 
 ```ts
 import faker from "faker";
@@ -247,7 +247,12 @@ const data = [];
 const amount = 10;
 
 for (let i = 0; i < amount; i++) {
-  data.push(createExample());
+  const item = {
+    ...createExample(),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
+  data.push(item);
 }
 
 export = data;
