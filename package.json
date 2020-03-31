@@ -19,7 +19,7 @@
     "test:feature": "jest tests/",
     "dev": "cross-env NODE_ENV=development nodemon",
     "seed": "ts-node seeds/",
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint . --ext .ts",
     "lint:fix": "yarn run lint --fix",
     "clean": "rimraf ./build"
   },
