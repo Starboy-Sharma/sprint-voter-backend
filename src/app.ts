@@ -20,6 +20,7 @@ if (config.app.env === "development") {
   app.use("/docs", docsRouter);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof ValidationError) {
     return res.status(err.statusCode).json(err);
