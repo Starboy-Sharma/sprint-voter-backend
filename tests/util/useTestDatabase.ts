@@ -27,13 +27,16 @@ async function dropAllCollections(): Promise<void> {
   }
 }
 
-export default function setupTestDatabase(): void {
+export default function useTestDatabase(dbName: string): void {
+  if (!dbName) dbName = "test";
+
   // Connect to Mongoose
   beforeAll(async () => {
     const url = process.env.MONGO_URL || "";
     const mongooseOptions = {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      dbName
     };
     await mongoose.connect(url, mongooseOptions);
   });
