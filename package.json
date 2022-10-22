@@ -1,0 +1,58 @@
+{
+  "name": "sprint-voter-backend",
+  "version": "1.0.0",
+  "description": "Sprint voter backend app",
+  "main": "app.js",
+  "scripts": {
+    "format:check": "prettier --check .",
+    "format:write": "prettier --write .",
+    "lint:check": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "dev": "nodemon app.js",
+    "prod": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Starboy-Sharma/sprint-voter-backend.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb",
+    "sprint-planner",
+    "sprint",
+    "express"
+  ],
+  "author": "Pankaj Sharma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Starboy-Sharma/sprint-voter-backend/issues"
+  },
+  "homepage": "https://github.com/Starboy-Sharma/sprint-voter-backend#readme",
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "helmet": "^6.0.0",
+    "joi": "^17.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.29.4",
+    "mongoose": "^6.6.7",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.5.3"
+  }
+}
