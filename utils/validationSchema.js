@@ -7,7 +7,6 @@ const response = require('../resonse/response')
 
 module.exports = {
     validateSchema(schema, key) {
-        console.log('Running...')
         return function (req, res, next) {
             const { error } = schema[key].validate(req.body)
             const valid = error == null

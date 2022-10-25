@@ -1,9 +1,14 @@
 const errorMessages = {
     validationError: 'Posted data is not valid',
+    serverError: 'Server error',
+    emailAlreadyExists: 'Email already exists',
+    loginFailed: 'Username or password is not correct',
+    accountDisabled: 'Your account is diabled.',
 }
 
 const successMessages = {
     login: 'Login Success',
+    signup: 'User registration successful',
 }
 
 exports.sendError = (error, res, code) => {
