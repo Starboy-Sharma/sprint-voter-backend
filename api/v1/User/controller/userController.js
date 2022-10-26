@@ -1,8 +1,9 @@
 const bcrypt = require('bcrypt')
+const mongoose = require('mongoose')
 const UsersModel = require('../../../../models/users.model')
 const TeamsModel = require('../../../../models/teams.model')
-
 const response = require('../../../../resonse/response')
+const generateToken = require('../../../../jwt/generateToken')
 
 class User {
     static async login(req, res) {
@@ -42,15 +43,22 @@ class User {
             )
 
             if (validPassword) {
-                /**
-                 * @TODO: Generate JWT token
-                 */
-
                 delete user.password
 
+                const userTeams = await TeamsModel.find({
+                    userId: mongoose.Types.ObjectId(user.id),
+                })
+
+                const accessToken = await generateToken({
+                    userId: user.id,
+                    expiresIn: '15d',
+                    role: postData.role,
+                })
+
                 const result = {
-                    accessToken: 'FDuiyto523iulhrkjwfsacsfy2980qwoad',
-                    ...user,
+                    accessToken,
+                    profile: user,
+                    teams: userTeams,
                 }
 
                 response.sendSuccess({ result, successCode: 'login' }, res, 200)
