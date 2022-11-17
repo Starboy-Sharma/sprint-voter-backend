@@ -29,7 +29,6 @@ const TeamSchema = mongoose.Schema(
             type: String,
             minlength: 3,
             required: true,
-            unique: true,
         },
     },
     { timestamps: true }

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const { Types } = mongoose.Schema
+
 const validateEmail = (email) => {
     // eslint-disable-next-line
     const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -29,6 +31,14 @@ const UserSchema = mongoose.Schema(
             trim: true,
             type: String,
         },
+
+        teams: [
+            {
+                type: Types.ObjectId,
+                default: [],
+                ref: 'users',
+            }
+        ],
 
         status: {
             default: 'active',

@@ -45,8 +45,12 @@ class User {
             if (validPassword) {
                 delete user.password
 
+                const teamIds = user.teams.map((teamId) =>
+                    mongoose.Types.ObjectId(teamId)
+                )
+
                 const userTeams = await TeamsModel.find({
-                    userId: mongoose.Types.ObjectId(user.id),
+                    _id: { $in: teamIds },
                 })
 
                 const accessToken = await generateToken({
@@ -98,6 +102,19 @@ class User {
                 role: 'team-manager',
             }
 
+            const isTeamNameTaken = await TeamsModel.findOne({
+                name: { $regex: '^' + teamData.name + '$', $options: 'i' },
+            })
+
+            if (isTeamNameTaken) {
+                response.sendError(
+                    { errorCode: 'teamNameExists', error: '' },
+                    res,
+                    400
+                )
+                return
+            }
+
             // check if email is already in use
             const isEmailExists = await UsersModel.findOne({
                 email: postData.email,
@@ -127,6 +144,12 @@ class User {
             const teamObj = new TeamsModel(teamData)
             let team = await teamObj.save()
             team = team.toJSON()
+
+            user.teams.push(mongoose.Types.ObjectId(team.id))
+            // update user team
+            await UsersModel.findByIdAndUpdate(user.id, {
+                teams: user.teams,
+            })
 
             const result = {
                 email: user.email,

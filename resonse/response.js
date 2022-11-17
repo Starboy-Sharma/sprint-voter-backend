@@ -4,6 +4,7 @@ const errorMessages = {
     emailAlreadyExists: 'Email already exists',
     loginFailed: 'Username or password is not correct',
     accountDisabled: 'Your account is diabled.',
+    teamNameExists: 'Team name already exists',
 }
 
 const successMessages = {
@@ -33,11 +34,12 @@ exports.sendError = (error, res, code) => {
 
 exports.sendSuccess = (result, res, code) => {
     const response = {
+        ...result,
         success: true,
         successCode: result.successCode,
         message: successMessages[result.successCode],
-        data: result,
         time: Date.now(),
     }
+
     res.status(code).json(response)
 }
