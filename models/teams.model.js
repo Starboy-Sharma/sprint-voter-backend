@@ -24,7 +24,7 @@ const TeamSchema = mongoose.Schema(
 
         members: [
             {
-                userId: { type: Types.ObjectId },
+                userId: { type: Types.ObjectId, ref: 'users' },
                 role: {
                     type: String,
                     default: 'team-manager',
@@ -36,6 +36,15 @@ const TeamSchema = mongoose.Schema(
                 },
             },
         ],
+
+        status: {
+            default: 'active',
+            type: String,
+            enum: {
+                values: ['active', 'blocked', 'deleted', 'deleted'],
+                message: '{VALUE} is not supported',
+            },
+        },
     },
     { timestamps: true }
 )

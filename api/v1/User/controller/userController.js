@@ -45,9 +45,85 @@ class User {
             if (validPassword) {
                 delete user.password
 
-                const userTeams = await TeamsModel.find({
-                    'members.userId': { $in: user.id },
-                })
+                // const userTeams = await TeamsModel.find({
+                //     'members.userId': { $in: user.id },
+                // })
+
+                // ? For User Teams create one more end point.
+                const userTeams = await TeamsModel.aggregate([
+                    {
+                        $match: {
+                            status: 'active',
+                            'members.userId': mongoose.Types.ObjectId(user.id),
+                        },
+                    },
+
+                    {
+                        $unwind: {
+                            path: '$members',
+                            preserveNullAndEmptyArrays: false,
+                        },
+                    },
+
+                    {
+                        $lookup: {
+                            from: 'users',
+                            let: { userId: '$members.userId' },
+                            pipeline: [
+                                {
+                                    $match: {
+                                        $expr: {
+                                            $eq: ['$_id', '$$userId'],
+                                        },
+                                        status: 'active',
+                                    },
+                                },
+
+                                {
+                                    $project: {
+                                        name: 1,
+                                        username: 1,
+                                        role: 1,
+                                        avatarUrl: 1,
+                                        isAvatarSelected: 1,
+                                        email: 1,
+                                        _id: 0,
+                                        id: '$_id',
+                                    },
+                                },
+                            ],
+                            as: 'member',
+                        },
+                    },
+
+                    {
+                        $unwind: {
+                            path: '$member',
+                            preserveNullAndEmptyArrays: false,
+                        },
+                    },
+
+                    {
+                        $group: {
+                            _id: '$_id',
+                            member: { $push: '$member' },
+                            teamName: { $first: '$teamName' },
+                            companyName: { $first: '$companyName' },
+                            userId: { $first: '$userId' },
+                        },
+                    },
+
+                    {
+                        $project: {
+                            _id: 1,
+                            teamId: '$teamId',
+                            teamName: '$name',
+                            members: '$member',
+                            companyName: 1,
+                            userId: 1,
+                        },
+                    },
+                ])
 
                 const accessToken = await generateToken({
                     userId: user.id,
