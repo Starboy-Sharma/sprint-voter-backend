@@ -16,20 +16,26 @@ const TeamSchema = mongoose.Schema(
             ref: 'users',
         },
 
-        role: {
-            required: true,
-            type: String,
-            enum: {
-                values: ['team-manager', 'team-member'],
-                message: '{VALUE} is not supported',
-            },
-        },
-
         companyName: {
             type: String,
             minlength: 3,
             required: true,
         },
+
+        members: [
+            {
+                userId: { type: Types.ObjectId },
+                role: {
+                    type: String,
+                    default: 'team-manager',
+                    required: true,
+                    enum: {
+                        values: ['team-manager', 'team-member'],
+                        message: '{VALUE} is not supported',
+                    },
+                },
+            },
+        ],
     },
     { timestamps: true }
 )

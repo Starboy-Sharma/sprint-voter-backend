@@ -2,6 +2,7 @@ const errorMessages = {
     validationError: 'Posted data is not valid',
     serverError: 'Server error',
     emailAlreadyExists: 'Email already exists',
+    usernameExists: 'Username already exists',
     loginFailed: 'Username or password is not correct',
     accountDisabled: 'Your account is diabled.',
     teamNameExists: 'Team name already exists',

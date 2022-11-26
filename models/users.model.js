@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-const { Types } = mongoose.Schema
-
 const validateEmail = (email) => {
     // eslint-disable-next-line
     const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
@@ -30,15 +28,34 @@ const UserSchema = mongoose.Schema(
             required: 'Username is required',
             trim: true,
             type: String,
+            unique: true,
         },
 
-        teams: [
-            {
-                type: Types.ObjectId,
-                default: [],
-                ref: 'users',
-            }
-        ],
+        name: {
+            trim: true,
+            type: String,
+            required: 'Name is required',
+        },
+
+        isAvatarSelected: {
+            default: false,
+            type: Boolean,
+        },
+
+        avatarUrl: {
+            default: '',
+            type: String,
+        },
+
+        role: {
+            type: String,
+            default: 'team-manager',
+            required: true,
+            enum: {
+                values: ['team-manager', 'team-member'],
+                message: '{VALUE} is not supported',
+            },
+        },
 
         status: {
             default: 'active',
