@@ -107,7 +107,7 @@ class User {
                         $group: {
                             _id: '$_id',
                             member: { $push: '$member' },
-                            teamName: { $first: '$teamName' },
+                            teamName: { $first: '$name' },
                             companyName: { $first: '$companyName' },
                             userId: { $first: '$userId' },
                         },
@@ -117,7 +117,7 @@ class User {
                         $project: {
                             _id: 1,
                             teamId: '$teamId',
-                            teamName: '$name',
+                            teamName: 1,
                             members: '$member',
                             companyName: 1,
                             userId: 1,
@@ -256,6 +256,49 @@ class User {
                 500
             )
         }
+    }
+
+    static async getTeamManager(req, res) {
+        const teamId = req.params.id
+
+        const teamManager = await TeamsModel.aggregate([
+            {
+                $match: {
+                    _id: mongoose.Types.ObjectId(teamId),
+                },
+            },
+
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'userId',
+                    foreignField: '_id',
+                    as: 'manager',
+                },
+            },
+
+            {
+                $unwind: {
+                    path: '$manager',
+                    preserveNullAndEmptyArrays: false,
+                },
+            },
+
+            {
+                $project: {
+                    name: '$manager.name',
+                    username: '$manager.username',
+                    email: '$manager.email',
+                    role: '$manager.role',
+                },
+            },
+        ])
+
+        response.sendSuccess(
+            { result: teamManager[0], successCode: 'apiStatus' },
+            res,
+            200
+        )
     }
 }
 

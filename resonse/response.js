@@ -6,11 +6,13 @@ const errorMessages = {
     loginFailed: 'Username or password is not correct',
     accountDisabled: 'Your account is diabled.',
     teamNameExists: 'Team name already exists',
+    apiStatus: 'failure',
 }
 
 const successMessages = {
     login: 'Login Success',
     signup: 'User registration successful',
+    apiStatus: 'success',
 }
 
 exports.sendError = (error, res, code) => {
