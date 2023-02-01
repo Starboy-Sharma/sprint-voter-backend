@@ -11,6 +11,7 @@ function init(server) {
 
     // Socket events
     io.sockets.on('connection', (socket) => {
+        console.log('Connection request received')
         /**
          * This event should be emitted after generate room.
          */
@@ -18,6 +19,7 @@ function init(server) {
             try {
                 const { room, userId, username } = data
                 const userStatus = {}
+                console.log('Room join request received', data)
 
                 // check user already exists in our user list or not
                 const isUserExists = user.getCurrentUser(socket.id)
@@ -34,6 +36,7 @@ function init(server) {
 
                 userStatus.userId = userId
                 userStatus.status = 'online'
+                userStatus.username = username
 
                 // Broadcast when a user connect #- Except Sender
                 socket.broadcast.emit('userStatus', userStatus)
@@ -42,20 +45,30 @@ function init(server) {
             }
         })
 
+        socket.on('addVote', (data) => {
+            console.log(data)
+        })
+
         socket.on('leaveRoom', () => {
             const userData = user.getCurrentUser(socket.id)
 
             console.log(`User left the room.`)
 
+            userData.status = 'offline'
+
+            // Broadcast when a user connect #- Except Sender
+            socket.broadcast.emit('userStatus', userData)
+
             if (userData) {
                 socket.leave(userData.room)
             }
 
-            // user.userLeave(socket.id);
+            user.userLeave(socket.id)
         })
 
         // Runs when client disconnect
         socket.on('disconnect', () => {
+            console.log('User disconnect 💔')
             const userData = user.getCurrentUser(socket.id)
 
             console.log(userData, socket.id)
@@ -76,7 +89,7 @@ function init(server) {
             // Broadcast when a user connect #- Except Sender
             socket.broadcast
                 // .to(_user.room)
-                .emit('userStatus', JSON.stringify(userStatus))
+                .emit('userStatus', userStatus)
 
             if (userData) {
                 io.to(userData.room).emit('message', 'user has left the chat')
