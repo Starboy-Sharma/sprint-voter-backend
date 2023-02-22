@@ -23,6 +23,7 @@ const verifyUserToken = (req, res, next) => {
             req.data = {
                 profileId: decoded.userId,
                 accessToken: token,
+                role: decoded.role,
             }
 
             // check on every request user is active or not

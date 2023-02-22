@@ -7,6 +7,7 @@ const errorMessages = {
     accountDisabled: 'Your account is diabled.',
     teamNameExists: 'Team name already exists',
     apiStatus: 'failure',
+    auth: 'You are not authorized!',
 }
 
 const successMessages = {

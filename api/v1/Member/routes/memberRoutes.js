@@ -14,3 +14,5 @@ router.post(
     validateSchema(schema, 'addTeamMembers'),
     controller.addMembers
 )
+
+module.exports = router
