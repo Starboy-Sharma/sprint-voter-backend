@@ -8,7 +8,14 @@ const response = require('../resonse/response')
 module.exports = {
     validateSchema(schema, key) {
         return function (req, res, next) {
-            const { error } = schema[key].validate(req.body)
+            const requestType = {
+                GET: 'query',
+                POST: 'body',
+                PUT: 'body',
+                DELETE: 'body',
+            }
+
+            const { error } = schema[key].validate(req[requestType[req.method]])
             const valid = error == null
             if (valid) {
                 next()
