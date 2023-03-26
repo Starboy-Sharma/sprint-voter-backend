@@ -8,6 +8,13 @@ const { verifyUserToken } = require('../../../../middlewares/auth')
 
 const router = express.Router()
 
+router.get(
+    '/',
+    verifyUserToken,
+    validateSchema(schema, 'listAvailableMembers'),
+    controller.listMembers
+)
+
 router.post(
     '/',
     verifyUserToken,

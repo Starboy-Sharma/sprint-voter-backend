@@ -46,7 +46,7 @@ const TeamSchema = mongoose.Schema(
             },
         },
     },
-    { timestamps: true }
+    { timestamps: true, versionKey: false }
 )
 
 // Duplicate the ID field.
