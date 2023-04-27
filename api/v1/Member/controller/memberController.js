@@ -83,9 +83,9 @@ class Member {
             let { isMember, page, pageCount, search, key, order } = req.query
             const { teamId } = req.query
             let result = {}
-            let sort = {}
+            const sort = {}
 
-            search = ''
+            search = search || ''
 
             if (!page) {
                 page = 1
