@@ -11,8 +11,6 @@ module.exports = {
                     .find({ status: 'active' })
                     .toArray()
 
-                console.log(users)
-
                 const usersPromise = users.map(async (user) =>
                     db.collection('users').updateOne(
                         // eslint-disable-next-line no-underscore-dangle
