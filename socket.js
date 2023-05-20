@@ -1,4 +1,5 @@
 const { user } = require('./utils/users')
+const { sprintData } = require('./utils/sprint-data')
 
 const sockets = {}
 
@@ -19,6 +20,8 @@ function init(server) {
             try {
                 const { room, userId, username } = data
                 const userStatus = {}
+                const sprint = data.sprintData
+
                 console.log('Room join request received', data)
 
                 // check user already exists in our user list or not
@@ -29,9 +32,14 @@ function init(server) {
                     user.userLeave(socket.id)
                 }
 
-                const newUser = user.addUser(socket.id, username, userId, room)
+                const newUser = user.addUser(socket.id, data)
 
                 socket.join(newUser.room)
+
+                if (data.role === 'team-manager') {
+                    sprintData.setSprintData(data.room, sprint)
+                }
+
                 console.log('User join room', { userId, room })
 
                 userStatus.userId = userId
@@ -39,7 +47,13 @@ function init(server) {
                 userStatus.username = username
 
                 // Broadcast when a user connect #- Except Sender
-                socket.broadcast.emit('userStatus', userStatus)
+                socket.broadcast.to(room).emit('userStatus', userStatus)
+
+                // send sprint data to the user
+                socket.emit(
+                    'getSprintData',
+                    sprintData.getSprintData(data.room)
+                )
             } catch (e) {
                 console.log('Bad news', e)
             }
