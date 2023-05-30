@@ -60,7 +60,14 @@ function init(server) {
         })
 
         socket.on('addVote', (data) => {
-            console.log(data)
+            // send vote data to all members
+            socket.broadcast.to(data.room).emit('getVote', data)
+            socket.emit('getVote', data)
+        })
+
+        socket.on('ticketData', (data) => {
+            console.log('ticketData', data)
+            socket.broadcast.to(data.room).emit('getTicketData', data)
         })
 
         socket.on('leaveRoom', () => {
