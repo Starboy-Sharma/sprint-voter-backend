@@ -70,6 +70,10 @@ function init(server) {
             socket.broadcast.to(data.room).emit('getTicketData', data)
         })
 
+        socket.on('reset_vote', (room) => {
+            io.to(room).emit('reset_vote', room)
+        })
+
         socket.on('leaveRoom', () => {
             const userData = user.getCurrentUser(socket.id)
 
